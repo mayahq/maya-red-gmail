@@ -1,6 +1,6 @@
 {
   "name": "maya-red-gmail",
-  "version": "1.0.0",
+  "version": "v1.0.0",
   "description": "Maya GMail module is to be used for automating email tasks and mix it with complex workflows on Maya Studio.",
   "main": "index.js",
   "scripts": {
