@@ -42,7 +42,8 @@ module.exports = function (RED) {
                     // send request to 'master' channel  with topic 'test_cmd' and JSON format payload.
                     let reqPayload = {
                         data: {
-                            referenceId: referenceId
+                            referenceId: referenceId,
+                            configNodes: ["google-session"]
                         }
                     };
                     return requestChannel.request(fastmqChannel, fastmqTopic, reqPayload, 'json');
