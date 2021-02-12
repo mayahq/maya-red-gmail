@@ -2,8 +2,8 @@ module.exports = function (RED) {
     function GetUnreadGmail(config) {
         RED.nodes.createNode(this, config);
         const node = this;
-        this.session = RED.nodes.getNode(this.session);
-        this.credentials = RED.nodes.getCredentials(this.session);
+        console.log(config);
+        this.credentials = RED.nodes.getCredentials(config.session);
         // Retrieve the config node
         this.on("input", async function (msg) {
             if(this.expiry_date <= Date.now()){

@@ -1,15 +1,21 @@
+const { isNullOrUndefined } = require('util');
+
 module.exports = function (RED) {
     'use strict'
     function GoogleSession(config) { 
         // the config information needs a runtime API to be set as creds
         const FastMQ = require('fastmq');
+        var crypto = require('crypto');
+        var localUserCache = {};
+        console.log(config);
         RED.nodes.createNode(this, config);
-        this.referenceId = this.credentials.referenceId;
-        this.access_token = this.credentials.access_token;
-        this.expiry_date = this.credentials.expiry_date;
-        this.fastmqChannel = config.fastmqChannel;
-        this.fastmqTopic = config.fastmqTopic;
-
+        this.name = config.name === "" || isNullOrUndefined(config.name)? "Google Authorization" : config.name;
+        // this.referenceId = this.credentials.referenceId;
+        // this.access_token = this.credentials.access_token;
+        // this.expiry_date = this.credentials.expiry_date;
+        this.fastmqChannel = config.fastmqChannel === "" || isNullOrUndefined(config.fastmqChannel) ? "master" : config.fastmqChannel;
+        this.fastmqTopic = config.fastmqTopic === "" || isNullOrUndefined(config.fastmqTopic) ? "refresh" : config.fastmqTopic;
+        console.log(this);
         const node = this;
         if (this.credentials.access_token && this.credentials.expiry_date) {
             this.oauth = {
@@ -17,6 +23,7 @@ module.exports = function (RED) {
             }
             this.credHash = crypto.createHash('sha1').update(this.credentials.access_token).digest('base64');
             var self = this;
+            localUserCache[self.credHash] = config.name;
             if (localUserCache.hasOwnProperty(self.credHash)) {
                 this.localIdentityPromise = Promise.resolve(localUserCache[self.credHash]);
             } else {
@@ -32,7 +39,7 @@ module.exports = function (RED) {
                 // send request to 'master' channel  with topic 'test_cmd' and JSON format payload.
                 let reqPayload = {
                     data: {
-                        referenceId: this.referenceId;
+                        referenceId: this.referenceId
                     }
                 };
                 return requestChannel.request('master', this.fastmqTopic, reqPayload, 'json');

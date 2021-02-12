@@ -3,9 +3,9 @@
       category: 'config',
       color: '#8BBDD9',
       defaults: {
-        name: { value: "", default: "GMail Authorization" },
-        fastmqChannel: {value: "", default: "master"},
-        fastmqTopic: {value: "", default: "refresh"}
+        name: { value: "GMail Authorization" },
+        fastmqChannel: {value: "master" },
+        fastmqTopic: {value: "refresh" }
       },
       credentials: {
             access_token: { type: String},
@@ -18,7 +18,7 @@
             if (this.name) {
                 return this.name
             } else {
-                return "Twitter: "+this.id
+                return this.id
             }
         },
       oneditsave: function() {
@@ -37,20 +37,21 @@
 </script>
 
 <script type="text/x-red" data-template-name="google-session">
-  <div class="form-row">
-    <label for="node-config-input-name">Name</label>
-    <input type="text" id="node-config-input-name"></input>
+    <div class="form-row">
+        <label style="margin-left: 20px;" for="node-config-input-name" >Name</label>
+        <input type="text" id="node-config-input-name"></input>
+    </div>
     <div class="form-row">
         <label style="margin-left: 20px;" for="node-config-input-access_token">Access Token</label>
         <input type="password" id="node-config-input-access_token">
     </div>
     <div class="form-row">
-        <label style="margin-left: 20px;" for="node-input-fastmqChannel">FastMQ Channel</label>
-        <input type="text" id="node-input-fastmqChannel">
+        <label style="margin-left: 20px;" for="node-config-input-fastmqChannel">FastMQ Channel</label>
+        <input type="text" id="node-config-input-fastmqChannel">
     </div>
     <div class="form-row">
-        <label style="margin-left: 20px;" for="node-input-fastmqTopi">FastMQ Topic</label>
-        <input type="text" id="node-input-fastmqTopic">
+        <label style="margin-left: 20px;" for="node-config-input-fastmqTopic">FastMQ Topic</label>
+        <input type="text" id="node-config-input-fastmqTopic">
     </div>
   </div>
 </script>

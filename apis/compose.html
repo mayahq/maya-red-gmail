@@ -1,52 +1,31 @@
 <script type="text/javascript">
-    RED.nodes.registerType('get-unread-gmail', {
-      category: 'gmail-unread',
+    RED.nodes.registerType('compose-gmail', {
+      category: 'gmail',
       color: '#8BBDD9',
       defaults: {
-        name: { value: '' },
-        email:  {value:"", validate: RED.validators.typedInput("payloadTypeEmail")},
-        payloadTypeEmail: {value:"global"},
+        name: { value: ""},
+        session: {value:"", type: "google-session"},
       },
       inputs:1,
       outputs:1,
       icon: "fa-file-code-o.png",
       label: function() {
-          return this.name || "unread";
+          return this.name || "compose";
       },
-      paletteLabel: "unread",
-      oneditprepare: function() {
-        if (this.payloadTypeEmail === null) {
-            if (this.email === "") {
-                this.payloadTypeEmail = "date";
-            } else {
-                this.payloadTypeEmail = "str";
-            }
-        } else if (this.payloadTypeEmail === 'string' || this.payloadTypeEmail === 'none') {
-            this.payloadTypeEmail = "str";
-        }
-        $("#node-input-payloadTypeEmail").val(this.payloadTypeEmail);
-        $("#node-input-email").typedInput({
-            default: 'str',
-            typeField: $("#node-input-payloadTypeEmail"),
-            types:['flow','global','msg','str']
-        });
-
-        $("#node-input-email").typedInput('type',this.payloadTypeEmail);
-      }
+      paletteLabel: "compose",
     });
 </script>
 
-<script type="text/x-red" data-template-name="get-unread-gmail">
-  <div class="form-row">
-    <label for="node-input-url">email</label>
-    <input type="text" id="node-input-email"></input>
-    <input type="hidden" id="node-input-payloadTypeEmail">
-  </div>
+<script type="text/x-red" data-template-name="compose-gmail">
   <div class="form-row">
       <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
       <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
   </div>
+  <div class="form-row">
+        <label for="node-input-session"><i class="fa fa-user"></i></span></label>
+        <input type="text" id="node-input-session">
+    </div>
 </script>
 
-<script type="text/x-red" data-help-name="get-unread-gmail">
+<script type="text/x-red" data-help-name="compose-gmail">
 </script>
